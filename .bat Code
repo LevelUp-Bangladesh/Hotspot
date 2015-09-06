@@ -1,0 +1,126 @@
+@echo off
+if not exist c:\users\%username% goto err1
+
+:main
+cls
+echo.
+echo.
+echo Wi-Fi Hotspot Compatible with Windows 8 - 
+echo By LevelUp Bangladesh
+echo --
+echo.
+echo.
+echo.
+echo 1. Create a Hotspot
+echo 2. Show Network Settings
+echo 3. Show Drivers
+echo 4. Start Network
+echo 5. Stop Network
+echo 6. Help
+echo 7. About
+echo 8. Quit
+echo.
+set /p select=Enter the number of your choice:
+
+if %select% == 1 goto :create
+if %select% == 2 goto :shownet
+if %select% == 3 goto :showdr
+if %select% == 4 goto :start
+if %select% == 5 goto :stop
+if %select% == 6 goto :help
+if %select% == 7 goto :about
+if %select% == 8 goto :exit
+echo Invalid input!
+pause
+cls
+goto :main
+
+:create
+cls
+echo Create Your Network Preference
+echo --
+echo Tips: SSID is the uniquie identification name of your hotspot
+echo.
+set /p ssid=Enter your desired SSID:
+cls
+echo Create Your Network Preference
+echo --
+echo Tips: The key would be the password to access your wireless network.
+echo The key must have 8 or more characters.
+echo.
+set /p key=Enter your desired Key:
+cls
+netsh wlan set hostednetwork mode=allow ssid=%ssid% key=%key%
+netsh wlan start hostednetwork
+echo.
+echo Make sure that the ICS feature is enabled for the newly created Wi-Fi so that the internet connection is shared to others. Go to Help for more info.
+echo.
+pause
+goto :main
+
+:showdr
+cls
+netsh wlan show drivers
+pause
+goto :main
+
+:shownet
+cls
+netsh wlan show hostednetwork
+pause
+goto :main
+
+:start
+cls
+netsh wlan start hostednetwork
+pause
+goto :main
+
+:stop
+cls
+netsh wlan stop hostednetwork
+pause
+goto :main
+
+:help
+cls
+echo Help Section (F.A.Q)
+echo --
+echo 1. How to enable ICS (Internetion Connection Sharing) settings?
+echo.
+echo Answer: Make sure that the ICS feature is enabled for the newly created Wi-Fi so
+echo that the internet connection is shared to others. To do this, go to Network ~
+echo Network Connections, and open Properties dialog of network device (which is connected to the internet). On sharing tab, enable 'Allow other network users to connect through this computer's Internet connection', and then choose the newly created ad-hoc/Wi-Fi
+echo connection from the list.
+echo.
+echo 2. Why I can't create connection?
+echo.
+echo Answer: Make sure that your laptop supports Hosted Network. To check this,
+echo go to choose 'Show Drivers' from the main menu and see if the 'Hosted network supported' is set to Yes.
+pause
+goto :main
+
+:about
+cls
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo Wi-Fi Hotspot Creator
+echo.
+echo By LevelUp Bangladesh
+echo.
+echo.
+echo.
+pause>nul
+goto :main
+
+:err1
+echo You need to be on windows
+pause>nul
+
+:exit
+exit
